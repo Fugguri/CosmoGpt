@@ -41,6 +41,8 @@ async def user():
 @app.post("/", name="Wellcome", tags=["Основное"], description="Тут будет описание методов?")
 async def user(request: Request, payment=PaymentEntry):
     # print(payment.status)
+    if not req:
+        return {"message": "accept"}
     req = await request.json()
     product_id = req.get("product").get("id")
     product_title = req.get("product").get("title")
