@@ -5,9 +5,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 # Установим директорию для работы
 
-WORKDIR .
+WORKDIR ./
 
-# COPY ./requirements.txt ./
+COPY ./requirements.txt ./
 
 # Устанавливаем зависимости и gunicorn
 # RUN pip install --upgrade pip
