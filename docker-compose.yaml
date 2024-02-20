@@ -1,8 +1,8 @@
 
 
 services:
-  telegram-bot:
-    container_name: CosmoBot
+  CosmoBot:
+    container_name: CosmoBotGpt
     working_dir: /.
     restart: always
     build:
