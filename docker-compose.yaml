@@ -23,7 +23,7 @@ services:
   nginx:
     build: 
       context: .
-      dockerfile: ./compose/nginx/Dockerfile
+      dockerfile: compose/nginx/Dockerfile
     depends_on:
       - cosmo-server
     image: cosmo-bot-nginx
