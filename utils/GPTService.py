@@ -1,5 +1,6 @@
 import httpx
 from openai import OpenAI
+from openai import BadRequestError
 from dotenv import dotenv_values
 import asyncio
 
@@ -58,7 +59,7 @@ class GPTService:
                 {"role": "assistant", "content": answer})
             return answer
 
-        except self.openai.error.RateLimitError as ex:
+        except BadRequestError as ex:
             print(ex)
             await asyncio.sleep(20)
             await self.create_answer(message)
