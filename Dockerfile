@@ -7,10 +7,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR .
 
-COPY ./requirements.txt ./
+# COPY ./requirements.txt ./
 
 # Устанавливаем зависимости и gunicorn
-RUN pip install --upgrade pip
+# RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r ./requirements.txt
 
 # Копируем файлы и билд
