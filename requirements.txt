@@ -1,6 +1,5 @@
-aiohttp==3.9.0b0
 aiogram==2.23.1
-fastapi==0.108
+fastapi==0.104.1
 httpx==0.26.0
 openai==1.12.0
 pydantic==2.6.1
