@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Request, logger
-import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from FastApiModels import PaymentEntry
 from database import Database
