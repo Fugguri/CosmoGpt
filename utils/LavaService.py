@@ -65,4 +65,4 @@ if __name__ == "__main__":
     lava = LavaService()
     {"id": "dfb54c1e-94a2-404b-86a0-0e15add904bb",
      "url": "https://tops-actively-lion.ngrok-free.app/", "eventType": "payment_result", "isActive": "true", "authType": "api_key", "createdAt": "2024-02-08T15:28:25.730089+02:00", "updatedAt": "2024-02-08T15:28:25.730089+02:00"}
-    print(lava.set_webhook())
+    print(lava.get_webhook())
