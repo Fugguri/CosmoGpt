@@ -1,4 +1,4 @@
-
+version: '3'
 
 services:
   cosmo-bot:
@@ -10,4 +10,12 @@ services:
         dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    command: sh -c "python main.py" "python server.py"
+    command: sh -c "python main.py" 
+  cosmo-server:
+    container_name: CosmoBotGpt-server
+    working_dir: /.
+    restart: always
+    build:
+        context: .
+        dockerfile: Dockerfile
+    command: "python server.py"
