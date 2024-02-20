@@ -16,4 +16,4 @@ RUN pip install --no-cache-dir -r ./requirements.txt
 # Копируем файлы и билд
 COPY ./ ./
 
-RUN chmod -R 777 ./
+# RUN chmod -R 777 ./
