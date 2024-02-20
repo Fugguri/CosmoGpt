@@ -3,7 +3,7 @@ version: "3.11"
 
 services:
   telegram-bot:
-    container_name: telegram-bot
+    container_name: CosmoBot
     working_dir: /.
     restart: always
     build:
