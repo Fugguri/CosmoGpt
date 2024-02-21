@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 import datetime
 
 # Создаем соединение с базой данных SQLite
-DATABASE_URL = "sqlite:///./users.db"
+DATABASE_URL = "sqlite:///data/users.db"
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 
