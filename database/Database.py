@@ -57,14 +57,15 @@ class UserManager:
             return all_users
 
     def get_user_by_telegram_id(self, telegram_id: int):
-
-        user = self.session.query(User).filter_by(
-            telegram_id=telegram_id).first()
+        with Session() as session:
+            user = session.query(User).filter_by(
+                telegram_id=telegram_id).first()
         return user
 
     def get_user_by_contract_id(self, contract_id: str):
-        user = self.session.query(User).filter_by(
-            contract_id=contract_id).first()
+        with Session() as session:
+            user = session.query(User).filter_by(
+                contract_id=contract_id).first()
         return user
 
     def delete_user(self, telegram_id: int):
