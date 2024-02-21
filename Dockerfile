@@ -12,6 +12,7 @@ COPY ./requirements.txt ./
 # Устанавливаем зависимости и gunicorn
 # RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r ./requirements.txt
+RUN pip install mysql-connector-python
 
 # Копируем файлы и билд
 COPY ./ ./
