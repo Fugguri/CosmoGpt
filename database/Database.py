@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session
 import datetime
 import dotenv
 # Создаем соединение с базой данных SQLite
@@ -9,14 +10,14 @@ env = dotenv.dotenv_values(".env")
 DATABASE_URL = env.get("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
+Session_ = sessionmaker(bind=engine)
 
 # Создаем базовый класс для объявления моделей
 Base = declarative_base()
 
 
 def get_db():
-    db = Session()
+    db = Session_()
     try:
         yield db
     finally:
@@ -48,7 +49,7 @@ Base.metadata.create_all(engine)
 
 class UserManager:
     def __init__(self):
-        self.session = Session()
+        self.session = Session_()
         self.session.autoflush = True
 
     def add_user(self, telegram_id: int, username: str = None, firstname: str = None, lastname: str = None):
