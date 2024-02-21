@@ -19,6 +19,3 @@ services:
         context: .
         dockerfile: Dockerfile
     command: "gunicorn server:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
-  db:
-    container_name: database_cosmo
-    restart: always
