@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI, Request, logger
 from fastapi.middleware.cors import CORSMiddleware
 from FastApiModels import PaymentEntry
@@ -44,13 +45,15 @@ async def user(request: Request, payment=PaymentEntry):
     if not request:
         return {"message": "accept"}
     req = await request.json()
+    print(req)
     product_id = req.get("product").get("id")
     product_title = req.get("product").get("title")
     contract_id = req.get("contractId")
     amount = req.get("amount")
     status = req.get("status")
     user = Database.get_user_by_contract_id(contract_id=contract_id)
-
+    if not user:
+        return
     if status == "subscription-active":
         today = datetime.datetime.utcnow()
         month = user.subscription_end + datetime.timedelta(days=31)
@@ -68,3 +71,14 @@ async def user(request: Request, payment=PaymentEntry):
 
 # if __name__ == "__main__":
 #     uvicorn.run(app, host='0.0.0.0', port=8000, root_path="/api_v2")
+# user = Database.get_user_by_contract_id(
+#     contract_id="9d11e34c-ada5-4af7-a2a7-de957fcf307e")
+
+# today = datetime.datetime.utcnow()
+# month = user.subscription_end + datetime.timedelta(days=31)
+# if user.subscription_end < today:
+#     month = today + datetime.timedelta(days=31)
+# Database.update_user(
+#     user.telegram_id, subscription_end=month)
+
+# print(asyncio.run(bot.send_message(user.telegram_id, "Подписка оплачена на месяц")))
