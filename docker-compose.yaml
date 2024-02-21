@@ -24,8 +24,7 @@ services:
     build:
         context: .
         dockerfile: Dockerfile
-    command: "gunicorn server:app --bind=0.0.0.0:8000"
-    # --workers 1 --worker-class uvicorn.workers.UvicornWorker 
+    command: "gunicorn server:app --workers 1 --worker-class uvicorn.workers.UvicornWorker     --bind=0.0.0.0:8000"
   
   mysql_db:
     image: mysql:8.0
