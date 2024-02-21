@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import Session
 import datetime
 import dotenv
 # Создаем соединение с базой данных SQLite
@@ -10,18 +9,11 @@ env = dotenv.dotenv_values(".env")
 DATABASE_URL = env.get("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
-Session_ = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine)
 
 # Создаем базовый класс для объявления моделей
 Base = declarative_base()
 
-
-def get_db():
-    db = Session_()
-    try:
-        yield db
-    finally:
-        db.close()
 # Определяем модель пользователя
 
 
@@ -49,62 +41,40 @@ Base.metadata.create_all(engine)
 
 class UserManager:
     def __init__(self):
-        self.session = Session_()
+        self.session = Session()
         self.session.autoflush = True
 
     def add_user(self, telegram_id: int, username: str = None, firstname: str = None, lastname: str = None):
-        with Session(engine) as session:
-            session.begin()
-            try:
-                new_user = User(telegram_id=telegram_id, username=username,
-                                firstname=firstname, lastname=lastname)
-                session.add(new_user)
-                session.commit()
-            except:
-                session.rollback()
-                raise
-            else:
-                session.commit()
+        with self.session.begin() as session:
+            new_user = User(telegram_id=telegram_id, username=username,
+                            firstname=firstname, lastname=lastname)
+            session.add(new_user)
+            session.commit()
 
     def get_all_users(self):
-        with Session(engine) as session:
-            session.begin()
-            try:
-                all_users = session.ex(User).all()
-
-            except:
-                session.rollback()
-                raise
-            else:
-                session.commit()
-        return all_users
+        with self.session.begin() as session:
+            all_users = session.query(User).all()
+            return all_users
 
     def get_user_by_telegram_id(self, telegram_id: int):
-        user = self.session.query(User).filter_by(
-            telegram_id=telegram_id).first()
-        return user
+        with self.session.begin() as session:
+            user = session.query(User).filter_by(
+                telegram_id=telegram_id).first()
+            return user
 
     def get_user_by_contract_id(self, contract_id: str):
-        with Session(engine) as session:
-            session.begin()
-            try:
-                user = self.session.query(User).filter_by(
-                    contract_id=contract_id).first()
-            except:
-                session.rollback()
-                raise
-            else:
-                session.commit()
-
-        return user
+        with self.session.begin() as session:
+            user = session.query(User).filter_by(
+                contract_id=contract_id).first()
+            return user
 
     def delete_user(self, telegram_id: int):
-
-        user = self.session.query(User).filter_by(
-            telegram_id=telegram_id).first()
-        if user:
-            self.session.delete(user)
-            self.session.commit()
+        with self.session.begin() as session:
+            user = session.query(User).filter_by(
+                telegram_id=telegram_id).first()
+            if user:
+                session.delete(user)
+                session.commit()
 
     def update_user(self, telegram_id: int,
                     new_username: str = None,
@@ -115,10 +85,8 @@ class UserManager:
                     free: Boolean = False,
                     use_promo: Boolean = False
                     ):
-        with Session(engine) as session:
-            session.begin()
-        try:
-            user = self.session.query(User).filter_by(
+        with self.session.begin() as session:
+            user = session.query(User).filter_by(
                 telegram_id=telegram_id).first()
             if user:
                 if new_username:
@@ -135,8 +103,3 @@ class UserManager:
                     user.use_promo = use_promo
                 user.free = free
             self.session.commit()
-        except:
-            session.rollback()
-            raise
-        else:
-            session.commit()
