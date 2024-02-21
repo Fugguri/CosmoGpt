@@ -33,7 +33,7 @@ class User(Base):
     use_promo = Column(Boolean, default=False)
 
     def __repr__(self):
-        return f"<User(telegram_id={self.telegram_id}, username='{self.username}', fullname='{self.firstname} {self.lastname}'), subscription_end='{self.subscription_end}')>"
+        return f"<User(telegram_id={self.telegram_id}, username='{self.username}', fullname='{self.firstname} {self.lastname}'),contract_id={self.contract_id}, subscription_end='{self.subscription_end}')>"
 
 
 # Создаем таблицу в базе данных
