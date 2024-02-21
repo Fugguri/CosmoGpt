@@ -5,16 +5,22 @@ import datetime
 import dotenv
 # Создаем соединение с базой данных SQLite
 env = dotenv.dotenv_values(".env")
-if env.get("DATABASE_URL"):
-    DATABASE_URL = env.get("DATABASE_URL")
-else:
-    DATABASE_URL = "sqlite:///data/users.db"
+
+DATABASE_URL = env.get("DATABASE_URL")
+
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 
 # Создаем базовый класс для объявления моделей
 Base = declarative_base()
 
+
+def get_db():
+    db = Session()
+    try:
+        yield db
+    finally:
+        db.close()
 # Определяем модель пользователя
 
 
@@ -46,13 +52,30 @@ class UserManager:
         self.session.autoflush = True
 
     def add_user(self, telegram_id: int, username: str = None, firstname: str = None, lastname: str = None):
-        new_user = User(telegram_id=telegram_id, username=username,
-                        firstname=firstname, lastname=lastname)
-        self.session.add(new_user)
-        self.session.commit()
+        with Session(engine) as session:
+            session.begin()
+            try:
+                new_user = User(telegram_id=telegram_id, username=username,
+                                firstname=firstname, lastname=lastname)
+                session.add(new_user)
+                session.commit()
+            except:
+                session.rollback()
+                raise
+            else:
+                session.commit()
 
     def get_all_users(self):
-        all_users = self.session.query(User).all()
+        with Session(engine) as session:
+            session.begin()
+            try:
+                all_users = session.ex(User).all()
+
+            except:
+                session.rollback()
+                raise
+            else:
+                session.commit()
         return all_users
 
     def get_user_by_telegram_id(self, telegram_id: int):
@@ -61,11 +84,21 @@ class UserManager:
         return user
 
     def get_user_by_contract_id(self, contract_id: str):
-        user = self.session.query(User).filter_by(
-            contract_id=contract_id).first()
+        with Session(engine) as session:
+            session.begin()
+            try:
+                user = self.session.query(User).filter_by(
+                    contract_id=contract_id).first()
+            except:
+                session.rollback()
+                raise
+            else:
+                session.commit()
+
         return user
 
     def delete_user(self, telegram_id: int):
+
         user = self.session.query(User).filter_by(
             telegram_id=telegram_id).first()
         if user:
@@ -81,20 +114,28 @@ class UserManager:
                     free: Boolean = False,
                     use_promo: Boolean = False
                     ):
-        user = self.session.query(User).filter_by(
-            telegram_id=telegram_id).first()
-        if user:
-            if new_username:
-                user.username = new_username
-            if new_firstname:
-                user.firstname = new_firstname
-            if new_lastname:
-                user.lastname = new_lastname
-            if contract_id:
-                user.contract_id = contract_id
-            if subscription_end:
-                user.subscription_end = subscription_end
-            if subscription_end:
-                user.use_promo = use_promo
-            user.free = free
-        self.session.commit()
+        with Session(engine) as session:
+            session.begin()
+        try:
+            user = self.session.query(User).filter_by(
+                telegram_id=telegram_id).first()
+            if user:
+                if new_username:
+                    user.username = new_username
+                if new_firstname:
+                    user.firstname = new_firstname
+                if new_lastname:
+                    user.lastname = new_lastname
+                if contract_id:
+                    user.contract_id = contract_id
+                if subscription_end:
+                    user.subscription_end = subscription_end
+                if subscription_end:
+                    user.use_promo = use_promo
+                user.free = free
+            self.session.commit()
+        except:
+            session.rollback()
+            raise
+        else:
+            session.commit()
