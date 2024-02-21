@@ -45,6 +45,7 @@ async def user(request: Request, payment=PaymentEntry):
     if not request:
         return {"message": "accept"}
     req = await request.json()
+    print(req)
     product_id = req.get("product").get("id")
     product_title = req.get("product").get("title")
     contract_id = req.get("contractId")
