@@ -52,8 +52,9 @@ class UserManager:
             session.commit()
 
     def get_all_users(self):
-        all_users = self.session.query(User).all()
-        return all_users
+        with Session() as session:
+            all_users = self.session.query(User).all()
+            return all_users
 
     def get_user_by_telegram_id(self, telegram_id: int):
 
