@@ -53,7 +53,7 @@ class UserManager:
 
     def get_all_users(self):
         with Session() as session:
-            all_users = self.session.query(User).all()
+            all_users = session.query(User).all()
             return all_users
 
     def get_user_by_telegram_id(self, telegram_id: int):
