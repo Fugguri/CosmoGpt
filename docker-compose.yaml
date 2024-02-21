@@ -6,7 +6,7 @@ services:
     working_dir: /.
     restart: always
     build:
-        context: .
+        context: ./data
         dockerfile: Dockerfile
     volumes:
       - .
