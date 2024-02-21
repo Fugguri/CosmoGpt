@@ -45,13 +45,13 @@ async def user(request: Request, payment=PaymentEntry):
     if not request:
         return {"message": "accept"}
     req = await request.json()
-    print(req)
     product_id = req.get("product").get("id")
     product_title = req.get("product").get("title")
     contract_id = req.get("contractId")
     amount = req.get("amount")
     status = req.get("status")
     user = Database.get_user_by_contract_id(contract_id=contract_id)
+    print(user)
     if not user:
         return
     if status == "subscription-active":
