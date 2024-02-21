@@ -97,4 +97,4 @@ class UserManager:
             if subscription_end:
                 user.use_promo = use_promo
             user.free = free
-            self.session.commit()
+        self.session.commit()
