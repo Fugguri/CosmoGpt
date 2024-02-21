@@ -2,9 +2,13 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
-
+import dotenv
 # Создаем соединение с базой данных SQLite
-DATABASE_URL = "sqlite:///data/users.db"
+env = dotenv.dotenv_values(".env")
+if env.get("DATABASE_URL"):
+    DATABASE_URL = env.get("DATABASE_URL")
+else:
+    DATABASE_URL = "sqlite:///data/users.db"
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 

@@ -19,3 +19,13 @@ services:
         context: .
         dockerfile: Dockerfile
     command: "gunicorn server:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
+  mysql_db:
+    build:
+      context: .
+      dockerfile: app-db/Dockerfile
+
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_DATABASE=Optimize
+    ports:
+      - 3306:3306

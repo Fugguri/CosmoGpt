@@ -18,5 +18,4 @@ COPY ./ ./
 
 
 CMD python3 main.py
-CMD python3 server.py
 # RUN chmod -R 777 ./
