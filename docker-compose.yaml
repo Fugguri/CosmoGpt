@@ -3,7 +3,7 @@ version: '3'
 services:
   cosmo-bot:
     container_name: CosmoBotGpt
-    working_dir: .
+    working_dir: ./
     restart: always
     build:
         context: .
@@ -12,7 +12,7 @@ services:
     command: sh -c "python main.py" 
   cosmo-server:
     container_name: CosmoBotGpt-server
-    working_dir: .
+    working_dir: ./
     restart: always
     ports:
       - "80:8000"
