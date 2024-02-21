@@ -3,23 +3,22 @@ version: '3'
 services:
   cosmo-bot:
     container_name: CosmoBotGpt
-    working_dir: /.
+    working_dir: ./CosmoBot
     restart: always
     build:
-        context: ./
+        context: ./CosmoBot
         dockerfile: Dockerfile
     volumes:
       - .
     command: sh -c "python main.py" 
   cosmo-server:
     container_name: CosmoBotGpt-server
-    working_dir: /.
+    working_dir: ./CosmoBot
     restart: always
     ports:
       - "80:8000"
-    volumes:
-      - ./
+
     build:
-        context: .
+        context: ./CosmoBot
         dockerfile: Dockerfile
     command: "gunicorn server:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
