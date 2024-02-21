@@ -8,6 +8,8 @@ services:
     build:
         context: .
         dockerfile: Dockerfile
+    depends_on:
+      - mysql_db
     command: sh -c "python main.py" 
   cosmo-server:
     container_name: CosmoBotGpt-server
@@ -15,17 +17,22 @@ services:
     restart: always
     ports:
       - "80:8000"
+    depends_on:
+      - mysql_db
     build:
         context: .
         dockerfile: Dockerfile
     command: "gunicorn server:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
   mysql_db:
-    build:
-      context: .
-      dockerfile: app-db/Dockerfile
-
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
     environment:
-    - MYSQL_ROOT_PASSWORD=password
-    - MYSQL_DATABASE=Optimize
+      - MYSQL_DATABASE=quotes
+      - MYSQL_ROOT_PASSWORD=root_pass
     ports:
-      - 3306:3306
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
