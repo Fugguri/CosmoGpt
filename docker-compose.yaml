@@ -9,7 +9,7 @@ services:
         context: .
         dockerfile: Dockerfile
     volumes:
-      - /.
+      - ./
     command: sh -c "python main.py" 
   cosmo-server:
     container_name: CosmoBotGpt-server
@@ -18,7 +18,7 @@ services:
     ports:
       - "80:8000"
     volumes:
-      - /.
+      - ./
     build:
         context: .
         dockerfile: Dockerfile
