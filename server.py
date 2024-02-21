@@ -52,6 +52,7 @@ async def user(request: Request, payment=PaymentEntry):
     amount = req.get("amount")
     status = req.get("status")
     user = Database.get_user_by_contract_id(contract_id=contract_id)
+    print(Database.get_all_users())
     print(user)
     if not user:
         return
