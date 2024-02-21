@@ -1,6 +1,7 @@
 import asyncio
 from fastapi import FastAPI, Request, logger
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 from FastApiModels import PaymentEntry
 from database import Database
 import datetime
@@ -71,8 +72,8 @@ async def user(request: Request, payment=PaymentEntry):
 
     return {"message": "accept"}
 
-# if __name__ == "__main__":
-#     uvicorn.run(app, host='0.0.0.0', port=8000, root_path="/api_v2")
+if __name__ == "__main__":
+    uvicorn.run(app, host='0.0.0.0', port=8000, root_path="/api_v2")
 # user = Database.get_user_by_contract_id(
 #     contract_id="9d11e34c-ada5-4af7-a2a7-de957fcf307e")
 
