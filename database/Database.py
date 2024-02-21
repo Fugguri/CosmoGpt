@@ -45,7 +45,7 @@ class UserManager:
         self.session.autoflush = True
 
     def add_user(self, telegram_id: int, username: str = None, firstname: str = None, lastname: str = None):
-        with self.session.begin() as session:
+        with Session.begin() as session:
             new_user = User(telegram_id=telegram_id, username=username,
                             firstname=firstname, lastname=lastname)
             session.add(new_user)
@@ -67,7 +67,7 @@ class UserManager:
         return user
 
     def delete_user(self, telegram_id: int):
-        with self.session.begin() as session:
+        with Session.begin() as session:
             user = session.query(User).filter_by(
                 telegram_id=telegram_id).first()
             if user:
@@ -83,7 +83,7 @@ class UserManager:
                     free: Boolean = False,
                     use_promo: Boolean = False
                     ):
-        with self.session.begin() as session:
+        with Session.begin() as session:
             user = session.query(User).filter_by(
                 telegram_id=telegram_id).first()
             if user:
