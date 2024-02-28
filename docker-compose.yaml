@@ -31,15 +31,15 @@ services:
     command: "python server.py"
   
   mysql_db:
-    image: mysql
+    image: mysql:8.0
     cap_add:
       - SYS_NICE
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root_pass
       MYSQL_DATABASE: cosmogpt
-      # MYSQL_USER: bot
-      # MYSQL_PASSWORD: hidden_pass
+      MYSQL_USER: bot
+      MYSQL_PASSWORD: hidden_pass
     ports:
       - '3306:3306'
     volumes:

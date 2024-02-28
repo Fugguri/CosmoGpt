@@ -2,7 +2,7 @@ CREATE DATABASE `cosmogpt` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb
 
 USE `cosmogpt`;
 
-CREATE TABLE `Users` (
+CREATE TABLE IF NOT EXISTS `Users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `telegram_id` bigint(20) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
