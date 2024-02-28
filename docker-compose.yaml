@@ -32,12 +32,14 @@ services:
       - SYS_NICE
     restart: always
     environment:
-      - MARIADB_DATABASE=cosmogpt
-      - MARIADB_ROOT_PASSWORD=root_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: cosmogpt
+      MYSQL_USER: bot
+      MYSQL_PASSWORD: hidden_bot_pass
+    volumes:
+      - data:/var/lib/mysql
     ports:
       - '3306:3306'
-    volumes:
-      - /var/lib/mysql
       # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
