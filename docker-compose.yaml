@@ -28,21 +28,21 @@ services:
         dockerfile: Dockerfile
     command: "python server.py"
   
-  mysql_db:
-    image: mysql
-    cap_add:
-      - SYS_NICE
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root_pass
-      MYSQL_DATABASE: cosmogpt
-      MYSQL_USER: bot
-      MYSQL_PASSWORD: hidden_pass
-    ports:
-      - '3306:3306'
-    volumes:
-      - /var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  # mysql_db:
+  #   image: mysql
+  #   cap_add:
+  #     - SYS_NICE
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root_pass
+  #     MYSQL_DATABASE: cosmogpt
+  #     MYSQL_USER: bot
+  #     MYSQL_PASSWORD: hidden_pass
+  #   ports:
+  #     - '3306:3306'
+  #   volumes:
+  #     - /var/lib/mysql
+  #     - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   openai_v1_bot_default:
