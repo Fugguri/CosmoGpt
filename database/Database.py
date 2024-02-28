@@ -5,8 +5,8 @@ import datetime
 import dotenv
 # Создаем соединение с базой данных SQLite
 env = dotenv.dotenv_values(".env")
-
 DATABASE_URL = env.get("DATABASE_URL")
+print(DATABASE_URL)
 
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
