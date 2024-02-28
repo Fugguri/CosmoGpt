@@ -103,3 +103,6 @@ class UserManager:
                     user.use_promo = use_promo
                 user.free = free
             self.session.commit()
+
+
+

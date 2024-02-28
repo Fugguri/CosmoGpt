@@ -12,10 +12,13 @@ services:
     depends_on:
       - mysql_db
     networks:
+      - cosmogpt_default
       - openai_v1_bot_default
     command: sh -c "python main.py" 
     links:
       - mysql_db
+
+
   cosmo-server:
     container_name: CosmoBotGpt-server
     working_dir: /.
@@ -23,6 +26,7 @@ services:
     # ports:
     #   - "8000:8000"
     networks:
+      - cosmogpt_default
       - openai_v1_bot_default
     depends_on:
       - mysql_db
@@ -32,6 +36,7 @@ services:
     command: "python server.py"
     links:
       - mysql_db
+
   mysql_db:
     image: mysql:8.0
     cap_add:
@@ -45,7 +50,8 @@ services:
     # ports:
     #   - '3306:3306'
     networks:
-      - openai_v1_bot_default
+      - cosmogpt_default
+      # - openai_v1_bot_default
     # command: --init-file /data/application/init.sql
     volumes:
       - /var/lib/mysql
@@ -56,6 +62,9 @@ volumes:
     driver: local
 
 networks:
+  cosmogpt_default:
+    external: true
+  
   openai_v1_bot_default:
     external: true
 
