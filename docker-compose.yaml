@@ -11,6 +11,8 @@ services:
         dockerfile: Dockerfile
     # depends_on:
     #   - mysql_db
+    networks:
+      - openai_v1_bot_default
     command: sh -c "python main.py" 
   
   cosmo-server:
