@@ -40,8 +40,8 @@ services:
       MYSQL_DATABASE: cosmogpt
       MYSQL_USER: bot
       MYSQL_PASSWORD: hidden_pass
-    ports:
-      - '3306:3306'
+    # ports:
+    #   - '3306:3306'
     command: --init-file /data/application/init.sql
     volumes:
       - /var/lib/mysql
