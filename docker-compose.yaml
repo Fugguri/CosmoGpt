@@ -26,7 +26,6 @@ services:
     # ports:
     #   - "8000:8000"
     networks:
-      - cosmogpt_default
       - openai_v1_bot_default
     depends_on:
       - mysql_db
@@ -63,7 +62,7 @@ volumes:
 
 networks:
   cosmogpt_default:
-    external: true
+    external: false
   
   openai_v1_bot_default:
     external: true
