@@ -17,8 +17,10 @@ services:
     container_name: CosmoBotGpt-server
     working_dir: /.
     restart: always
-    ports:
-      - "80:8000"
+    # ports:
+    #   - "8000:8000"
+    networks:
+      - openai_v1_bot_default
     depends_on:
       - mysql_db
     build:
