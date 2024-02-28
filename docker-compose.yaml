@@ -18,7 +18,7 @@ services:
     working_dir: /.
     restart: always
     ports:
-      - "8000"
+      - "80:8000"
     depends_on:
       - mysql_db
     build:
@@ -37,7 +37,7 @@ services:
       MYSQL_USER: bot
       MYSQL_PASSWORD: hidden_pass
     ports:
-      - '3306'
+      - '3306:3306'
     volumes:
       - /var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
