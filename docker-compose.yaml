@@ -14,7 +14,8 @@ services:
     networks:
       - openai_v1_bot_default
     command: sh -c "python main.py" 
-  
+    links:
+      - mysql_db
   cosmo-server:
     container_name: CosmoBotGpt-server
     working_dir: /.
@@ -29,7 +30,8 @@ services:
         context: .
         dockerfile: Dockerfile
     command: "python server.py"
-  
+    links:
+      - mysql_db
   mysql_db:
     image: mysql:8.0
     cap_add:
@@ -46,6 +48,10 @@ services:
     volumes:
       - /var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql_db:
+    driver: local
 
 networks:
   openai_v1_bot_default:
