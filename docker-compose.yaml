@@ -42,7 +42,7 @@ services:
       MYSQL_PASSWORD: hidden_pass
     # ports:
     #   - '3306:3306'
-    command: --init-file /data/application/init.sql
+    # command: --init-file /data/application/init.sql
     volumes:
       - /var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
