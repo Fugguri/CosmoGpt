@@ -18,7 +18,7 @@ services:
     working_dir: /.
     restart: always
     ports:
-      - "443:8000"
+      - "8000"
     depends_on:
       - mysql_db
     build:
