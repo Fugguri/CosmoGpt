@@ -35,12 +35,12 @@ services:
       MYSQL_ROOT_PASSWORD: root_pass
       MYSQL_DATABASE: cosmogpt
       MYSQL_USER: bot
-      MYSQL_PASSWORD: hidden_bot_pass
-    volumes:
-      - data:/var/lib/mysql
+      MYSQL_PASSWORD: hidden_pass
     ports:
       - '3306:3306'
-      # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - /var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   openai_v1_bot_default:
