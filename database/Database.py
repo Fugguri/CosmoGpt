@@ -99,10 +99,7 @@ class UserManager:
                     user.contract_id = contract_id
                 if subscription_end:
                     user.subscription_end = subscription_end
-                if subscription_end:
+                if use_promo:
                     user.use_promo = use_promo
                 user.free = free
             self.session.commit()
-
-
-
